@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b0a">
+  <title>Payment Test — Store</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">PAYMENT<span>TEST</span></a>
+    <span class="secure-label"><span class="dot"></span> SECURE CHECKOUT</span>
+  </header>
+  <main class="layout">
+    <section class="intro">
+      <p class="eyebrow">INDEPENDENT STORE / ONLINE</p>
+      <h1>Good stuff.<br><span>Simple checkout.</span></h1>
+      <p class="sub">A straightforward way to get what you came for. Secure payments are handled by trusted payment providers.</p>
+      <div class="trust"><span>01 / Secure provider checkout</span><span>02 / No card details stored here</span></div>
+    </section>
+    <section class="product-panel">
+      <div class="product-art" aria-hidden="true"><div class="art-grid"></div><div class="art-mark">P<span>/</span>T</div><div class="art-caption">DIGITAL GOODS<br>COLLECTION 001</div></div>
+      <div class="product-info">
+        <p class="eyebrow">FEATURED PRODUCT</p>
+        <h2 id="product-name">My digital product</h2>
+        <p id="product-description" class="description">A product from my store.</p>
+        <div class="price-row"><span id="price">$5.00</span><span class="one-time">ONE-TIME PAYMENT</span></div>
+        <div class="payment-actions">
+          <button id="stripe-button" class="primary" type="button">Pay by card / wallet <span>↗</span></button>
+          <div id="paypal-button-container"></div>
+        </div>
+        <p id="status" class="status" role="status" aria-live="polite">Choose a payment method to continue.</p>
+        <p class="fineprint">Payments are processed by Stripe or PayPal. Available payment methods depend on your location, device, and provider account.</p>
+      </div>
+    </section>
+  </main>
+  <footer><span>PAYMENT TEST</span><span>Secure payments · No card data stored on this site</span></footer>
+  <script src="/app.js" defer></script>
+</body>
+</html>
