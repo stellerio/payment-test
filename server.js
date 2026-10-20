@@ -59,6 +59,7 @@ app.get("/api/config", (_req, res) => {
       currency: (process.env.PRODUCT_CURRENCY || "usd").toUpperCase()
     },
     stripeReady: Boolean(process.env.STRIPE_SECRET_KEY && !process.env.STRIPE_SECRET_KEY.includes("replace_me")),
+    paypalClientId: process.env.PAYPAL_CLIENT_ID && !process.env.PAYPAL_CLIENT_ID.includes("replace_me") ? process.env.PAYPAL_CLIENT_ID : null,
     paypalReady: Boolean(process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET &&
       !process.env.PAYPAL_CLIENT_ID.includes("replace_me") && !process.env.PAYPAL_CLIENT_SECRET.includes("replace_me"))
   });
