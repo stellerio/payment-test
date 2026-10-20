@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b0a">
+  <title>Order status — Payment Test</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/">PAYMENT<span>TEST</span></a><span class="secure-label">ORDER STATUS</span></header>
+  <main class="layout" style="grid-template-columns:1fr;max-width:720px">
+    <section class="product-panel">
+      <div class="product-info">
+        <p class="eyebrow">PAYMENT CONFIRMATION</p>
+        <h1 id="headline">Checking your payment…</h1>
+        <p id="detail" class="description">Please wait while we verify the payment with the provider.</p>
+        <p id="order" class="status"></p>
+        <a class="primary" style="display:flex;margin-top:24px" href="/">Return to store <span>↗</span></a>
+      </div>
+    </section>
+  </main>
+  <script>
+    const headline = document.querySelector("#headline");
+    const detail = document.querySelector("#detail");
+    const order = document.querySelector("#order");
+    const params = new URLSearchParams(location.search);
+    async function verify() {
+      if (params.get("provider") === "paypal") {
+        // The server only redirects here after the PayPal capture endpoint returned COMPLETED.
+        headline.textContent = "Payment completed";
+        detail.textContent = "PayPal confirmed your payment. Keep your order ID for support.";
+        order.textContent = "Order: " + (params.get("order_id") || "confirmed");
+        return;
+      }
+      const sessionId = params.get("session_id");
+      if (!sessionId) {
+        headline.textContent = "No payment session found";
+        detail.textContent = "Return to the store and try checkout again.";
+        return;
+      }
+      try {
+        const response = await fetch("/api/checkout/stripe/session?session_id=" + encodeURIComponent(sessionId));
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Could not verify payment.");
+        if (data.paid) {
+          headline.textContent = "Payment completed";
+          detail.textContent = "Stripe confirmed your payment. Thank you for your order.";
+          order.textContent = "Order: " + sessionId;
+          order.className = "status success";
+        } else {
+          headline.textContent = "Payment not completed";
+          detail.textContent = "The provider has not confirmed payment. You have not been shown a success confirmation.";
+        }
+      } catch (error) {
+        headline.textContent = "Could not verify payment";
+        detail.textContent = error.message;
+      }
+    }
+    verify();
+  </script>
+</body>
+</html>
