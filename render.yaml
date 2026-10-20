@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: payment-test
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BASE_URL
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+      - key: PAYPAL_ENV
+        value: sandbox
+      - key: PRODUCT_NAME
+        value: My digital product
+      - key: PRODUCT_DESCRIPTION
+        value: A product from my store.
+      - key: PRODUCT_PRICE_CENTS
+        value: "500"
+      - key: PRODUCT_CURRENCY
+        value: usd
+      - key: STORE_NAME
+        value: Payment Test
